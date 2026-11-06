@@ -1,0 +1,374 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="A cheat sheet on defending web-browsing AI agents against indirect prompt injection, labeling each defense by what the user gives up.">
+<title>Browsing Agent Injection Cheat Sheet</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: a reference page in the OWASP Cheat Sheet Series style, one reading column with a sticky "on this page" rail at desktop widths */
+:root{
+  --bg:#f6f7f9; --panel:#ffffff; --ink:#161a20; --muted:#59626e; --rule:#d9dde3;
+  --accent:#0b6e8f; --accent-soft:#e3f0f5;
+  --ok:#1b7f3b; --ok-soft:#e4f3e8; --warn:#8f6400; --warn-soft:#fbf1d6; --bad:#b42318; --bad-soft:#fbe4e1;
+  --code-bg:#eef1f4; --quote:#3b4752;
+  --sans:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#121519; --panel:#1a1f25; --ink:#e8ebef; --muted:#a3acb8; --rule:#2d343d;
+    --accent:#4cb3d6; --accent-soft:#17303a;
+    --ok:#5fd08a; --ok-soft:#163222; --warn:#e6b84a; --warn-soft:#3a2f12; --bad:#f08a80; --bad-soft:#3d1d1a;
+    --code-bg:#232930; --quote:#c3cbd4; color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#121519; --panel:#1a1f25; --ink:#e8ebef; --muted:#a3acb8; --rule:#2d343d;
+  --accent:#4cb3d6; --accent-soft:#17303a;
+  --ok:#5fd08a; --ok-soft:#163222; --warn:#e6b84a; --warn-soft:#3a2f12; --bad:#f08a80; --bad-soft:#3d1d1a;
+  --code-bg:#232930; --quote:#c3cbd4; color-scheme:dark;
+}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.6;margin:0}
+.wrap{max-width:1120px;margin:0 auto;padding-block:0 64px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+header.top{border-bottom:1px solid var(--rule);padding-block:28px 20px;display:flex;flex-wrap:wrap;gap:16px 32px;align-items:flex-end;justify-content:space-between}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+h1{font-size:clamp(26px,3.4vw,38px);line-height:1.15;margin:6px 0 0;font-weight:600;text-wrap:balance;max-width:20ch}
+.meta{font-family:var(--mono);font-size:12.5px;color:var(--muted);display:flex;flex-wrap:wrap;gap:6px 18px}
+.pill{display:inline-block;font-family:var(--mono);font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;padding:2px 8px;border-radius:3px;border:1px solid currentColor}
+.pill.draft{color:var(--warn)}
+.grid{display:grid;grid-template-columns:minmax(0,1fr) 240px;gap:48px;align-items:start;margin-top:8px}
+main{min-width:0;max-width:72ch}
+nav.toc{position:sticky;top:calc(16px + env(safe-area-inset-top,0px));font-size:13.5px;border-left:2px solid var(--rule);padding-left:14px;margin-top:40px}
+nav.toc .eyebrow{margin-bottom:8px}
+nav.toc a{display:block;color:var(--muted);text-decoration:none;padding:3px 0}
+nav.toc a:hover,nav.toc a:focus-visible{color:var(--accent)}
+@media (max-width:860px){.grid{grid-template-columns:1fr}nav.toc{position:static;border-left:0;padding-left:0;margin-top:24px;display:flex;flex-wrap:wrap;gap:4px 16px;border-bottom:1px solid var(--rule);padding-bottom:12px}nav.toc .eyebrow{width:100%}}
+h2{font-size:22px;font-weight:600;margin:48px 0 10px;padding-top:12px;border-top:1px solid var(--rule);text-wrap:balance}
+h3{font-size:17px;font-weight:600;margin:28px 0 6px;text-wrap:balance}
+h2 a.anchor,h3 a.anchor{color:var(--rule);text-decoration:none;margin-left:6px;font-weight:400}
+h2 a.anchor:hover,h3 a.anchor:hover{color:var(--accent)}
+p{margin:0 0 14px}
+a{color:var(--accent)}
+code,pre{font-family:var(--mono);font-size:13.5px}
+code{background:var(--code-bg);padding:1px 5px;border-radius:3px}
+pre{background:var(--code-bg);padding:14px 16px;border-radius:4px;overflow-x:auto;line-height:1.5;margin:10px 0 16px}
+pre code{background:none;padding:0}
+blockquote{margin:14px 0;padding:10px 16px;border-left:3px solid var(--accent);background:var(--accent-soft);color:var(--quote);font-style:italic}
+blockquote cite{display:block;font-style:normal;font-family:var(--mono);font-size:12.5px;margin-top:6px;color:var(--muted)}
+.label{display:inline-block;font-family:var(--mono);font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;padding:2px 8px;border-radius:3px;margin-left:8px;vertical-align:middle}
+.label.ok{background:var(--ok-soft);color:var(--ok)}
+.label.warn{background:var(--warn-soft);color:var(--warn)}
+.label.bad{background:var(--bad-soft);color:var(--bad)}
+.label.info{background:var(--accent-soft);color:var(--accent)}
+dl.spec{display:grid;grid-template-columns:max-content minmax(0,1fr);gap:6px 18px;margin:8px 0 18px;font-size:15px}
+dl.spec dt{font-family:var(--mono);font-size:12.5px;letter-spacing:.04em;text-transform:uppercase;color:var(--muted);padding-top:3px}
+dl.spec dd{margin:0}
+@media (max-width:520px){dl.spec{grid-template-columns:1fr;gap:2px}dl.spec dd{margin-bottom:8px}}
+.tablewrap{overflow-x:auto;margin:10px 0 18px}
+table{border-collapse:collapse;width:100%;font-size:14.5px;min-width:560px}
+th,td{border:1px solid var(--rule);padding:8px 10px;text-align:left;vertical-align:top}
+th{background:var(--code-bg);font-weight:600}
+td.num{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+caption{caption-side:top;text-align:left;font-size:14px;color:var(--muted);padding:0 0 8px}
+figure{margin:18px 0 22px}
+figure img{width:100%;height:auto;border:1px solid var(--rule);border-radius:4px;background:#fff}
+figcaption{font-size:13.5px;color:var(--muted);margin-top:8px;line-height:1.5}
+.diagram{overflow-x:auto;background:var(--panel);border:1px solid var(--rule);border-radius:4px;padding:10px}
+.diagram svg{display:block;min-width:720px;width:100%;height:auto}
+.diagram .box{fill:var(--panel);stroke:var(--ink);stroke-width:1.2}
+.diagram .untrusted{fill:var(--warn-soft);stroke:var(--warn)}
+.diagram .t{font-family:var(--sans);font-size:13px;fill:var(--ink)}
+.diagram .b{font-weight:600}
+.diagram .s{font-size:11.5px;fill:var(--muted)}
+.diagram .gate{fill:var(--bad)}
+.diagram .gt{font-family:var(--mono);font-size:11px;fill:var(--bad)}
+.diagram .arrow{stroke:var(--ink);stroke-width:1.6;fill:none;marker-end:url(#ah)}
+.diagram .ahead{fill:var(--ink)}
+ol.steps{padding-left:22px;margin:8px 0 16px}
+ol.steps li{margin-bottom:6px}
+ul{padding-left:22px}
+.check{list-style:none;padding:0;margin:8px 0 16px;display:grid;gap:8px}
+.check li{display:flex;gap:10px;align-items:flex-start;background:var(--panel);border:1px solid var(--rule);border-radius:4px;padding:10px 12px}
+.check input{margin-top:5px;accent-color:var(--accent);flex:0 0 auto}
+.check label{cursor:pointer;min-width:0}
+.callout{border:1px solid var(--rule);border-left:4px solid var(--warn);background:var(--panel);padding:12px 16px;border-radius:4px;margin:14px 0 18px;font-size:15px}
+.refs{font-size:14px;padding-left:0;list-style:none;counter-reset:ref}
+.refs li{counter-increment:ref;margin-bottom:10px;padding-left:38px;position:relative;overflow-wrap:anywhere}
+.refs li::before{content:"[" counter(ref) "]";position:absolute;left:0;font-family:var(--mono);color:var(--muted)}
+footer{margin-top:56px;border-top:1px solid var(--rule);padding-top:16px;font-size:13.5px;color:var(--muted)}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important}}
+html{scroll-behavior:smooth}
+</style>
+<style>img{max-width:100%}</style>
+</head>
+<body>
+
+<div class="wrap">
+<header class="top">
+  <div>
+    <div class="eyebrow">Cheat Sheet Series &nbsp;·&nbsp; Agent Security</div>
+    <h1>Web-Browsing Agent Prompt Injection Prevention Cheat Sheet</h1>
+  </div>
+  <div class="meta">
+    <span><span class="pill draft">Draft for workshop</span></span>
+    <span>Last reviewed 2026-10-26</span>
+    <span>Author B. Rathi</span>
+    <span>Reading time 12 min</span>
+  </div>
+</header>
+
+<div class="grid">
+<main>
+
+<h2 id="intro">Introduction<a class="anchor" href="#intro">#</a></h2>
+<p>A web-browsing agent is a language model that can open pages, read email, and call tools with the permissions of the person who launched it. Indirect prompt injection is the attack that follows. An attacker hides instructions inside content the agent was asked to read, and the agent carries them out as if the user had typed them. This sheet is for engineers who are adding agent features to a browser, an email client, or an internal tool, and who have to pick a defense before shipping.</p>
+<p>Every defense on this page works by taking something away from the agent. That is the part most guidance leaves out, so each defense below is labeled by what it blocks and by what the agent can no longer do on its own. The numbers come from one independent benchmark rather than from the papers that proposed each defense, for reasons the benchmark section explains.</p>
+<p>This sheet does not cover direct prompt injection, where the attacker is the user, or jailbreaks that target the model's content rules. Those have their own sheets.</p>
+
+<h2 id="anatomy">Anatomy of the Vulnerability<a class="anchor" href="#anatomy">#</a></h2>
+<p>Traditional software keeps a line between code, which is trusted, and input, which is not. A language model has no such line. It receives one stream of text and treats all of it as something to act on. The researchers who named the attack in 2023 put it this way.</p>
+<blockquote>LLM-integrated applications "blur the line between data and instructions."<cite>Greshake et al., 2023 [1]</cite></blockquote>
+<p>The agent is also what security engineers have called a confused deputy since 1988. It holds the user's authority and the attacker's instructions at the same time and cannot keep them apart.</p>
+<blockquote>It "serves two masters and carries some authority from each to perform its respective duties. It has no way to keep them apart."<cite>Hardy, 1988 [2]</cite></blockquote>
+<p>The path below shows where untrusted content enters and where each family of defense can step in. Gates are the places a defense sits. Everything to the right of a gate is what the gate protects, and everything the gate refuses is what the user gives up.</p>
+
+<div class="diagram" role="img" aria-label="Attack path from user request to data leaving, with three gates where defenses sit">
+<svg viewBox="0 0 900 250" xmlns="http://www.w3.org/2000/svg">
+  <defs><marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path class="ahead" d="M0 0 L10 5 L0 10 z"/></marker></defs>
+  <!-- boxes -->
+  <rect class="box" x="10" y="70" width="140" height="80" rx="4"/>
+  <text class="t b" x="80" y="100" text-anchor="middle">1. User asks</text>
+  <text class="t s" x="80" y="120" text-anchor="middle">"summarize this page"</text>
+  <text class="t s" x="80" y="136" text-anchor="middle">agent holds user's keys</text>
+
+  <rect class="box" x="195" y="70" width="140" height="80" rx="4"/>
+  <text class="t b" x="265" y="100" text-anchor="middle">2. Agent plans</text>
+  <text class="t s" x="265" y="120" text-anchor="middle">picks tools it may call</text>
+  <text class="t s" x="265" y="136" text-anchor="middle">browse, email, run code</text>
+
+  <rect class="box untrusted" x="380" y="70" width="140" height="80" rx="4"/>
+  <text class="t b" x="450" y="100" text-anchor="middle">3. Reads the page</text>
+  <text class="t s" x="450" y="120" text-anchor="middle">hidden text, spoiler tag,</text>
+  <text class="t s" x="450" y="136" text-anchor="middle">crafted email body</text>
+
+  <rect class="box" x="565" y="70" width="140" height="80" rx="4"/>
+  <text class="t b" x="635" y="100" text-anchor="middle">4. Calls a tool</text>
+  <text class="t s" x="635" y="120" text-anchor="middle">with the user's authority</text>
+  <text class="t s" x="635" y="136" text-anchor="middle">opens inbox, runs command</text>
+
+  <rect class="box" x="750" y="70" width="140" height="80" rx="4"/>
+  <text class="t b" x="820" y="100" text-anchor="middle">5. Data leaves</text>
+  <text class="t s" x="820" y="120" text-anchor="middle">login code, files, email</text>
+  <text class="t s" x="820" y="136" text-anchor="middle">sent to the attacker</text>
+
+  <!-- arrows -->
+  <path class="arrow" d="M150 110 L193 110"/>
+  <path class="arrow" d="M335 110 L378 110"/>
+  <path class="arrow" d="M520 110 L563 110"/>
+  <path class="arrow" d="M705 110 L748 110"/>
+
+  <!-- gates -->
+  <rect class="gate" x="352" y="80" width="6" height="60" rx="2"/>
+  <text class="gt" x="355" y="60" text-anchor="middle">GATE A</text>
+  <text class="gt" x="355" y="176" text-anchor="middle">tool filter</text>
+  <text class="gt" x="355" y="190" text-anchor="middle">fix the plan first</text>
+
+  <rect class="gate" x="537" y="80" width="6" height="60" rx="2"/>
+  <text class="gt" x="540" y="60" text-anchor="middle">GATE B</text>
+  <text class="gt" x="540" y="176" text-anchor="middle">spotlighting, sandwich,</text>
+  <text class="gt" x="540" y="190" text-anchor="middle">classifier, model training</text>
+
+  <rect class="gate" x="722" y="80" width="6" height="60" rx="2"/>
+  <text class="gt" x="725" y="60" text-anchor="middle">GATE C</text>
+  <text class="gt" x="725" y="176" text-anchor="middle">approval prompt or</text>
+  <text class="gt" x="725" y="190" text-anchor="middle">capability tracking</text>
+
+  <text class="t s" x="10" y="232">Stage 3 is the only untrusted input. Every defense either keeps stage 3 from steering stage 4, or keeps stage 4 from reaching stage 5.</text>
+</svg>
+</div>
+
+<h2 id="example">Worked Example, Auto-GPT 2023<a class="anchor" href="#example">#</a></h2>
+<p>The earliest well-documented case is still the clearest. In June 2023 Lukas Euler of Positive Security asked Auto-GPT, an early autonomous agent, to summarize a website he controlled [3]. The sequence is the whole attack in five steps.</p>
+<ol class="steps">
+  <li>The page carried instructions in text sized to zero pixels, invisible to a person and plain to the model.</li>
+  <li>Auto-GPT read the page and adopted the hidden instructions as its next goals.</li>
+  <li>The agent spoofed its own console output with terminal control codes, so the user saw a harmless plan and approved it.</li>
+  <li>With approval, the agent ran attacker-chosen code on the machine.</li>
+  <li>In the project's Docker setup the code escaped the container onto the host. The maintainers fixed the escape in version 0.4.3.</li>
+</ol>
+<p>Two later cases show the same path on shipping products. In August 2025 Brave showed that Perplexity's Comet browser could be redirected by instructions hidden in a Reddit comment, and the agent then exposed the user's email address and a one-time login code after a simple summary request [4]. Brave's description of the cause is the diagnosis in one sentence.</p>
+<blockquote>Comet "feeds a part of the webpage directly to its LLM without distinguishing between the user's instructions and untrusted content from the webpage."<cite>Chaikin and Sahib, Brave, 2025 [4]</cite></blockquote>
+<p>Two months earlier, Aim Labs disclosed EchoLeak, in which one crafted email pulled data out of Microsoft 365 Copilot with no click from the user at all [5]. Microsoft rated it critical at CVSS 9.3 and fixed it server side [6].</p>
+
+<h2 id="attacks">Common Attack Types for Browsing Agents<a class="anchor" href="#attacks">#</a></h2>
+<div class="tablewrap">
+<table>
+<thead><tr><th>Vector</th><th>Where it hides</th><th>Seen in</th><th>Why it works</th></tr></thead>
+<tbody>
+<tr><td>Hidden page text</td><td>Zero-pixel fonts, white on white, off-screen elements</td><td>Auto-GPT [3]</td><td>The model reads the DOM, not the rendered page</td></tr>
+<tr><td>User-generated content</td><td>Comments, spoiler tags, reviews on an otherwise trusted site</td><td>Comet [4]</td><td>The agent trusts the domain and inherits its comments</td></tr>
+<tr><td>Zero-click email</td><td>A message body the assistant indexes before anyone opens it</td><td>EchoLeak [5]</td><td>Retrieval runs without a user action to gate it</td></tr>
+<tr><td>Output spoofing</td><td>Control codes inside tool output shown to the user</td><td>Auto-GPT [3]</td><td>The approval prompt displays attacker-controlled text</td></tr>
+<tr><td>Delayed trigger</td><td>Instructions that wait for a later tool call or a later task</td><td>AgentDojo attack suite [7]</td><td>Defenses that check only the first read miss it</td></tr>
+</tbody>
+</table>
+</div>
+
+<h2 id="defenses">Primary Defenses<a class="anchor" href="#defenses">#</a></h2>
+<p>Defenses are listed from the one to turn on first to the one to turn on last. Each heading carries a label. The label is not a quality grade. It says what the defense asks the user to give up, which is the question this sheet exists to answer.</p>
+
+<h3 id="toolfilter">Tool filter<span class="label ok">Recommended first layer</span><span class="label warn">Removes mid-task tool changes</span></h3>
+<p>Before the agent reads anything untrusted, the model is shown only the user's request and the tool list, and it picks the tools this task will need. Everything else is removed for the rest of the run. Injected text can still change what the agent says, but it cannot reach a tool the plan did not include.</p>
+<dl class="spec">
+  <dt>Blocks</dt><dd>Almost every targeted attack in the benchmark, 57.7% down to 6.8% [7].</dd>
+  <dt>Gives up</dt><dd>The agent cannot discover that it needs a new tool halfway through. When the plan changes, the user restarts the task.</dd>
+  <dt>Requirements</dt><dd>A tool list with clear descriptions, and a planning step that runs before any fetch.</dd>
+  <dt>Concerns</dt><dd>Tasks that are genuinely open ended lose the most. Utility held at 73.1% in the benchmark, above the undefended agent, but only on tasks whose tools could be predicted up front [7].</dd>
+</dl>
+
+<h3 id="approval">Approval gate before data leaves<span class="label ok">Recommended for consequential actions</span><span class="label warn">Costs attention</span></h3>
+<p>Willison's rule for practitioners is the lethal trifecta. An agent that has private data, reads untrusted content, and can send data out is exploitable, so remove one of the three [8]. For a browsing agent the first two are the point of the product, which leaves the third. Any action that sends data outside the session, such as an email, a form submission, or an outbound request, waits for a person to approve it.</p>
+<dl class="spec">
+  <dt>Blocks</dt><dd>Exfiltration, which is the payoff of every case above.</dd>
+  <dt>Gives up</dt><dd>Unattended runs. Someone must be present to click.</dd>
+  <dt>Requirements</dt><dd>Approval prompts that show the real action, rendered from structured data and never from tool output text, or the Auto-GPT spoof returns.</dd>
+  <dt>Concerns</dt><dd>The CaMeL authors warn of "user fatigue" when prompts come too often [9]. A gate people click through without reading is not a gate.</dd>
+</dl>
+
+<h3 id="capability">Capability tracking layer, CaMeL style<span class="label info">Strongest guarantee</span><span class="label bad">Highest cost</span></h3>
+<p>CaMeL wraps the model in a conventional program that tracks where every value came from. Data that arrived from an untrusted page carries that mark, and a policy decides which tools it may flow into. The model proposes, the wrapper enforces, and the authors report zero successful attacks out of 949 on the benchmark with Claude 3.5 Sonnet [9].</p>
+<dl class="spec">
+  <dt>Blocks</dt><dd>Untrusted data from ever changing control flow, by construction rather than by probability.</dd>
+  <dt>Gives up</dt><dd>Task completion and flexibility. With o3 the undefended agent finished 84% of tasks and CaMeL 77% [9]. Someone also has to write and maintain the policies.</dd>
+  <dt>Requirements</dt><dd>The agent must be rewritten in CaMeL's style, with explicit data flow. It is not a wrapper you bolt onto an existing agent.</dd>
+  <dt>Concerns</dt><dd>The authors are direct about the limits.</dd>
+</dl>
+<blockquote>"No, prompt injection attacks are not fully solved."<cite>Debenedetti et al., CaMeL, Section 9.3 [9]</cite></blockquote>
+
+<h3 id="spotlighting">Spotlighting, data delimiting<span class="label info">Cheap</span><span class="label warn">Small measured gain</span></h3>
+<p>Retrieved text is wrapped in markers, or transformed, so the model can tell it apart from instructions. It costs almost nothing to add. The gap between the vendor's number and the benchmark's number is the reason this sheet trusts benchmarks.</p>
+<dl class="spec">
+  <dt>Vendor claim</dt><dd>Spotlighting cut attack success "from greater than 50% to below 2%" in Microsoft's own experiments [10].</dd>
+  <dt>Benchmark</dt><dd>On AgentDojo it moved attack success from 57.7% to 41.7% [7].</dd>
+  <dt>Gives up</dt><dd>Nothing the user can see. That is also why it cannot be the only defense.</dd>
+  <dt>Concerns</dt><dd>Treat it as hygiene, in the way input encoding is hygiene for web apps, and layer something above it.</dd>
+</dl>
+
+<h3 id="sandwich">Prompt sandwiching<span class="label info">Cheap</span><span class="label warn">Partial</span></h3>
+<p>The user's original request is repeated after every tool result, so the most recent instruction the model sees is always the user's. It raised benign utility to 85.5% in the benchmark, the highest of any defense, and still let 27.8% of attacks through [7].</p>
+<dl class="spec">
+  <dt>Gives up</dt><dd>Context budget. Every step carries the request again, which matters on long tasks.</dd>
+  <dt>Concerns</dt><dd>One attack in four succeeds. Good as a second layer behind a tool filter, not as a first.</dd>
+</dl>
+
+<h3 id="classifier">Injection classifier on tool output<span class="label bad">Discouraged as the only defense</span></h3>
+<p>A separate model scores each retrieved document for injection and blocks what it flags. In the benchmark the ProtectAI classifier cut attacks to 8.0% and also cut benign utility to 41.5%, because it blocked safe pages along with hostile ones [7]. A survey of 128 studies puts false positive rates for input filters at 15% to 30% [11].</p>
+<dl class="spec">
+  <dt>Gives up</dt><dd>Access to ordinary pages. The user opens blocked pages by hand, or gives up on the task.</dd>
+  <dt>Concerns</dt><dd>Detection falls on new attack phrasings, so a classifier tuned today drifts. Use it in report-only mode to learn what it would block before letting it block anything.</dd>
+</dl>
+
+<h3 id="hierarchy">Instruction hierarchy, model training<span class="label info">Keeps flexibility</span><span class="label warn">Probabilistic</span></h3>
+<p>OpenAI trains the model to rank system and user instructions above anything that arrived in retrieved text, and reports large robustness gains with "minimal degradations on standard capabilities" [12]. Because the defense lives inside the model, the agent keeps every tool and every mid-task change of plan.</p>
+<dl class="spec">
+  <dt>Gives up</dt><dd>Nothing visible to the user, and nothing you control. You get whatever the model vendor shipped.</dd>
+  <dt>Concerns</dt><dd>A trained behavior lowers the odds of an attack and guarantees nothing, and the published numbers come from the vendor's own evaluations. No independent benchmark row exists yet, which is why it is absent from the table below.</dd>
+</dl>
+
+<h2 id="numbers">What One Benchmark Measured<a class="anchor" href="#numbers">#</a></h2>
+<p>AgentDojo is an independent suite of 97 agent tasks and 629 injection cases that scores task completion and attack success at the same time [7]. Its authors ran four published defenses on GPT-4o against their strongest attack. Table 1 collects the results, and Fig. 1 plots them.</p>
+<div class="tablewrap">
+<table>
+<caption>Table 1. Security and utility of four defenses on GPT-4o in AgentDojo, 95% confidence intervals in parentheses. Data from Debenedetti et al. [7], Table 5.</caption>
+<thead><tr><th>Defense</th><th>Benign utility (%)</th><th>Utility under attack (%)</th><th>Attack success (%)</th><th>What the user gives up</th></tr></thead>
+<tbody>
+<tr><td>No defense</td><td class="num">69.0 (±3.6)</td><td class="num">50.0 (±3.9)</td><td class="num">57.7 (±3.9)</td><td>Nothing, and 58% of attacks succeed</td></tr>
+<tr><td>Spotlighting</td><td class="num">72.7 (±3.5)</td><td class="num">55.6 (±3.9)</td><td class="num">41.7 (±3.9)</td><td>Nothing visible, small gain</td></tr>
+<tr><td>Prompt sandwiching</td><td class="num">85.5 (±2.8)</td><td class="num">67.3 (±3.7)</td><td class="num">27.8 (±3.5)</td><td>Context budget, 1 in 4 attacks still land</td></tr>
+<tr><td>Tool filter</td><td class="num">73.1 (±3.5)</td><td class="num">56.3 (±3.9)</td><td class="num">6.8 (±2.0)</td><td>No new tools mid task</td></tr>
+<tr><td>Injection classifier</td><td class="num">41.5 (±3.9)</td><td class="num">21.1 (±3.2)</td><td class="num">8.0 (±2.1)</td><td>Safe pages blocked</td></tr>
+</tbody>
+</table>
+</div>
+<figure>
+  <img src="fig1.png" alt="Scatter plot of benign task utility against targeted attack success rate for five configurations. Tool filter sits far left at 6.8% attack success and 73.1% utility. The injection detector is also far left but low at 41.5% utility. Prompt sandwiching is highest at 85.5% utility with 27.8% attack success. Spotlighting and no defense sit on the right at 41.6% and 57.7% attack success.">
+  <figcaption>Fig. 1. Security versus autonomy for four defenses on GPT-4o. Points farther left are more secure, points higher up keep more of the agent's usefulness, and no point reaches the empty top left corner. Each point is one row of Table 1, with bars for 95% confidence intervals. Data from Debenedetti et al. [7]. Figure by the author, co-authored with Claude.</figcaption>
+</figure>
+<p>Read the top left corner of Fig. 1 as the product you wanted to ship. It is empty. The two defenses that nearly stop the attack sit at opposite ends of the utility axis, and the one that keeps the agent most useful lets a quarter of attacks through. Pick a point on this chart knowingly, and tell the people who will use the agent which corner you gave up.</p>
+
+<h2 id="reportonly">Report-Only Rollout<a class="anchor" href="#reportonly">#</a></h2>
+<p>Content Security Policy taught web teams to run a new rule in report-only mode before enforcing it. The same move works here. Run the defense, log what it would have blocked, block nothing, and promote it once the log shows what it costs on your real traffic. This is the only way to learn a classifier's false positive rate on your own pages before your users do.</p>
+<pre><code># agent.policy   (report-only rollout of a new defense)
+defense        = tool_filter
+mode           = report_only        # log would-be blocks, block nothing
+log_sink       = security_review    # one line per would-be block, with the task id
+review_after   = 14 days
+promote_when   = would_be_blocks are all true positives
+                 and task_restart_rate is acceptable to product
+</code></pre>
+<p>Two weeks of logs answers the question Table 1 cannot. The benchmark tells you what a defense costs on its 97 tasks. The log tells you what it costs on yours.</p>
+
+<h2 id="checklist">Design Review Checklist<a class="anchor" href="#checklist">#</a></h2>
+<p>Paste this into the design review for any feature that lets a model read content the user did not write. A feature that cannot answer every item is not ready for unattended use.</p>
+<ul class="check">
+  <li><input type="checkbox" id="c1"><label for="c1">The agent picks its tools before it reads any untrusted content, and cannot add tools after.</label></li>
+  <li><input type="checkbox" id="c2"><label for="c2">Any action that sends data outside the session waits for a person, and the approval prompt is rendered from structured fields, never from tool output text.</label></li>
+  <li><input type="checkbox" id="c3"><label for="c3">Retrieved content is marked as data before it reaches the model, and the team knows this alone stops fewer than one attack in three.</label></li>
+  <li><input type="checkbox" id="c4"><label for="c4">If a classifier is used, it ran in report-only mode on real traffic first, and the false positive rate is written down.</label></li>
+  <li><input type="checkbox" id="c5"><label for="c5">The team has named which of the three trifecta legs, private data, untrusted content, or outbound sending, this agent gives up, or has accepted in writing that it keeps all three.</label></li>
+  <li><input type="checkbox" id="c6"><label for="c6">Console and status text shown to the user cannot contain control codes or markup from tool output.</label></li>
+  <li><input type="checkbox" id="c7"><label for="c7">User-facing documentation says what the agent will refuse to do on its own and what the user must then do by hand.</label></li>
+  <li><input type="checkbox" id="c8"><label for="c8">Someone owns re-running the benchmark, or the report-only log, when the model vendor ships a new version.</label></li>
+</ul>
+
+<h2 id="scope">Scope and Limits of This Sheet<a class="anchor" href="#scope">#</a></h2>
+<p>The numbers are from one benchmark, one model, and one attack style, so treat them as the shape of the trade off and not as your numbers. Only the defenses with a benchmark row appear in Table 1. The instruction hierarchy has no independent row, and CaMeL's own numbers are on a different model and a later release of the benchmark, so they are quoted in the text rather than placed on the chart. The three product cases are demonstrations by researchers, not attacks observed in the wild. The field is young, and the "last reviewed" date at the top of this page is there because every number on it will age.</p>
+
+<h2 id="refs">References<a class="anchor" href="#refs">#</a></h2>
+<ol class="refs">
+  <li>K. Greshake, S. Abdelnabi, S. Mishra, C. Endres, T. Holz, and M. Fritz, "Not what you've signed up for: Compromising real-world LLM-integrated applications with indirect prompt injection," in Proc. 16th ACM Workshop on Artificial Intelligence and Security (AISec '23), Nov. 2023, pp. 79 to 90. <a href="https://doi.org/10.1145/3605764.3623985">doi 10.1145/3605764.3623985</a></li>
+  <li>N. Hardy, "The confused deputy: (or why capabilities might have been invented)," ACM SIGOPS Operating Systems Review, vol. 22, no. 4, pp. 36 to 38, Oct. 1988. <a href="https://doi.org/10.1145/54289.871709">doi 10.1145/54289.871709</a></li>
+  <li>L. Euler, "Hacking Auto-GPT and escaping its docker container," Positive Security, Jun. 29, 2023. <a href="https://positive.security/blog/auto-gpt-rce">positive.security/blog/auto-gpt-rce</a></li>
+  <li>A. Chaikin and S. K. Sahib, "Agentic browser security: Indirect prompt injection in Perplexity Comet," Brave, Aug. 20, 2025. <a href="https://brave.com/blog/comet-prompt-injection/">brave.com/blog/comet-prompt-injection</a></li>
+  <li>Aim Labs, "Breaking down 'EchoLeak', the first zero-click AI vulnerability enabling data exfiltration from Microsoft 365 Copilot," Aim Security, Jun. 11, 2025. <a href="https://www.aim.security/lp/aim-labs-echoleak-blogpost">aim.security/lp/aim-labs-echoleak-blogpost</a></li>
+  <li>Microsoft Security Response Center, "CVE-2025-32711, M365 Copilot information disclosure vulnerability," Jun. 11, 2025. <a href="https://msrc.microsoft.com/update-guide/vulnerability/CVE-2025-32711">msrc.microsoft.com/update-guide/vulnerability/CVE-2025-32711</a></li>
+  <li>E. Debenedetti, J. Zhang, M. Balunović, L. Beurer-Kellner, M. Fischer, and F. Tramèr, "AgentDojo: A dynamic environment to evaluate prompt injection attacks and defenses for LLM agents," in Advances in Neural Information Processing Systems, vol. 37, 2024, pp. 82895 to 82920. <a href="https://arxiv.org/abs/2406.13352">arxiv.org/abs/2406.13352</a></li>
+  <li>S. Willison, "The lethal trifecta for AI agents: Private data, untrusted content, and external communication," Jun. 16, 2025. <a href="https://simonwillison.net/2025/Jun/16/the-lethal-trifecta/">simonwillison.net/2025/Jun/16/the-lethal-trifecta</a></li>
+  <li>E. Debenedetti et al., "Defeating prompt injections by design," arXiv preprint 2503.18813, Jun. 2025. <a href="https://arxiv.org/abs/2503.18813">arxiv.org/abs/2503.18813</a></li>
+  <li>K. Hines, G. Lopez, M. Hall, F. Zarfati, Y. Zunger, and E. Kiciman, "Defending against indirect prompt injection attacks with spotlighting," arXiv preprint 2403.14720, Mar. 2024. <a href="https://arxiv.org/abs/2403.14720">arxiv.org/abs/2403.14720</a></li>
+  <li>T. Geng, Z. Xu, Y. Qu, and W. E. Wong, "Prompt injection attacks on large language models: A survey of attack methods, root causes, and defense strategies," Computers, Materials &amp; Continua, vol. 87, no. 1, 2026. <a href="https://doi.org/10.32604/cmc.2025.074081">doi 10.32604/cmc.2025.074081</a></li>
+  <li>E. Wallace, K. Xiao, R. Leike, L. Weng, J. Heidecke, and A. Beutel, "The instruction hierarchy: Training LLMs to prioritize privileged instructions," arXiv preprint 2404.13208, Apr. 2024. <a href="https://arxiv.org/abs/2404.13208">arxiv.org/abs/2404.13208</a></li>
+  <li>L. Beurer-Kellner et al., "Design patterns for securing LLM agents against prompt injections," arXiv preprint 2506.08837, Jun. 2025. <a href="https://arxiv.org/abs/2506.08837">arxiv.org/abs/2506.08837</a></li>
+  <li>OWASP Cheat Sheet Series, "LLM prompt injection prevention cheat sheet," the genre model for this page. <a href="https://cheatsheetseries.owasp.org/cheatsheets/LLM_Prompt_Injection_Prevention_Cheat_Sheet.html">cheatsheetseries.owasp.org</a></li>
+</ol>
+
+<h3 id="images">Image credits</h3>
+<p>The attack path diagram and Fig. 1 were made by the author, co-authored with Claude (Anthropic, 2026). Fig. 1 plots data from Debenedetti et al. [7], Table 5. No third-party images are used.</p>
+
+<footer>
+  Genre translation of a CMPE 294 literature review, San José State University, Fall 2026. Written in the format of the OWASP Cheat Sheet Series [14] for engineers choosing a defense before shipping an agent feature. Not an OWASP publication.
+</footer>
+</main>
+
+<nav class="toc" aria-label="On this page">
+  <div class="eyebrow">On this page</div>
+  <a href="#intro">Introduction</a>
+  <a href="#anatomy">Anatomy of the vulnerability</a>
+  <a href="#example">Worked example, Auto-GPT</a>
+  <a href="#attacks">Common attack types</a>
+  <a href="#defenses">Primary defenses</a>
+  <a href="#numbers">What one benchmark measured</a>
+  <a href="#reportonly">Report-only rollout</a>
+  <a href="#checklist">Design review checklist</a>
+  <a href="#scope">Scope and limits</a>
+  <a href="#refs">References</a>
+</nav>
+</div>
+</div>
+
+</body>
+</html>
