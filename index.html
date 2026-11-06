@@ -3,12 +3,12 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Who Pays for Safety?</title>
-<meta name="description" content="AI assistants that browse and read email can be hijacked by a stranger's hidden note. Every fix hands work back to you, and no one is counting.">
+<title>Should You Let an AI Run Your Errands?</title>
+<meta name="description" content="Tech companies want their chatbots to browse, shop and read your email for you. The research says the only way to make that safe is to make it less useful.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;1,500&family=Source+Serif+4:ital,wght@0,400;0,600;1,400&display=swap">
 <style>
-  :root{--ink:#121212;--muted:#5a5a5a;--rule:#e2e2e2;--paper:#ffffff;--tint:#f7f7f5;--blue:#2a78d6;--orange:#eb6834;--serif:'Source Serif 4',Georgia,'Times New Roman',serif;--display:'Playfair Display',Georgia,serif;--sans:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Arial,sans-serif}
+  :root{--ink:#121212;--muted:#5a5a5a;--rule:#e2e2e2;--paper:#ffffff;--tint:#f7f7f5;--blue:#2a78d6;--orange:#eb6834;--green:#2e7d4f;--serif:'Source Serif 4',Georgia,'Times New Roman',serif;--display:'Playfair Display',Georgia,serif;--sans:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Arial,sans-serif}
   *{box-sizing:border-box}
   html{-webkit-text-size-adjust:100%}
   body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--serif);font-size:19px;line-height:1.6}
@@ -30,7 +30,7 @@
   article p{margin:0 0 24px}
   article h2{font-family:var(--display);font-weight:700;font-size:28px;line-height:1.2;margin:48px 0 16px}
   .dropcap::first-letter{font-family:var(--display);font-weight:700;font-size:78px;line-height:.78;float:left;padding:8px 10px 0 0}
-  blockquote.pull{margin:40px 0;padding:8px 0 8px 0;border-top:3px solid var(--ink);border-bottom:1px solid var(--rule);font-family:var(--display);font-size:28px;line-height:1.3;font-style:italic;font-weight:500}
+  blockquote.pull{margin:40px 0;padding:8px 0;border-top:3px solid var(--ink);border-bottom:1px solid var(--rule);font-family:var(--display);font-size:28px;line-height:1.3;font-style:italic;font-weight:500}
   blockquote.pull cite{display:block;font-family:var(--sans);font-size:13px;font-style:normal;color:var(--muted);margin-top:12px;letter-spacing:.06em;text-transform:uppercase}
   .stat{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:32px 0}
   .stat div{background:var(--tint);padding:18px 16px;border-top:3px solid var(--ink)}
@@ -40,6 +40,8 @@
   th,td{text-align:left;vertical-align:top;padding:12px 10px;border-bottom:1px solid var(--rule)}
   th{font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);border-bottom:2px solid var(--ink)}
   td:first-child{font-weight:600}
+  .verdict td:first-child{white-space:nowrap}
+  .go{color:var(--green)}.wait{color:#b26a00}.no{color:#b3261e}
   .tips{counter-reset:tip;list-style:none;padding:0;margin:0 0 24px}
   .tips li{counter-increment:tip;position:relative;padding:0 0 0 52px;margin:0 0 20px}
   .tips li::before{content:counter(tip);position:absolute;left:0;top:2px;width:36px;height:36px;border-radius:50%;background:var(--ink);color:#fff;font-family:var(--sans);font-weight:700;font-size:16px;display:flex;align-items:center;justify-content:center}
@@ -51,27 +53,41 @@
   .refs p{margin:0 0 10px}
   .note{font-family:var(--sans);font-size:14px;color:var(--muted);background:var(--tint);padding:14px 16px;border-radius:4px;margin:0 0 24px}
   sup{font-family:var(--sans);font-size:11px;color:var(--blue);font-weight:700}
-  @media (max-width:640px){body{font-size:18px}h1{font-size:34px}.dek{font-size:19px}.stat{grid-template-columns:1fr}blockquote.pull{font-size:23px}article h2{font-size:25px}table{font-size:14px}}
+  @media (max-width:640px){body{font-size:18px}h1{font-size:34px}.dek{font-size:19px}.stat{grid-template-columns:1fr}blockquote.pull{font-size:23px}article h2{font-size:25px}table{font-size:14px}.verdict td:first-child{white-space:normal}}
 </style>
 </head>
 <body>
-<div class="masthead"><span><b>Technology</b> · Artificial Intelligence</span><span>Nov. 5, 2026</span></div>
+<div class="masthead"><span><b>Technology</b> · Personal Tech</span><span>Nov. 5, 2026</span></div>
 
 <header class="hed">
-  <p class="kicker">The Trust Problem</p>
-  <h1>Your AI Assistant Will Do What the Internet Tells It. The Fixes Hand the Work Back to You.</h1>
-  <p class="dek">Tech companies are racing to give chatbots the power to browse the web, read email and act on your behalf. Security researchers keep showing that a stranger’s hidden note can take the wheel. Every known fix costs you something, and nobody is keeping the receipt.</p>
-  <div class="byline"><span>By <b>Bhagyesh Rathi</b></span><span>San José State University</span><span>9 min read</span></div>
+  <p class="kicker">The Next Chatbot</p>
+  <h1>Should You Let an AI Run Your Errands? Not Yet, and Here’s the Catch.</h1>
+  <p class="dek">Half of American adults now use a chatbot. The companies behind them want the next step to be an assistant that browses, shops and reads your email for you. The security research says the only way to make that assistant safe is to make it less useful.</p>
+  <div class="byline"><span>By <b>Bhagyesh Rathi</b></span><span>San José State University</span><span>10 min read</span></div>
 </header>
+
+<article>
+<p class="dropcap">Last August, two security researchers at Brave, the company behind a privacy-focused web browser, tried out a rival product. Perplexity’s Comet browser had just added an assistant that could read pages and take actions for you. They gave it an ordinary job. Summarize a Reddit thread.</p>
+<p>Somewhere in that thread, the researchers had planted a comment with instructions a person would scroll past. The assistant did not scroll past them. It opened the user’s email, found a one-time login code, and posted it where an attacker could read it. The person who asked for the summary never clicked a bad link and never typed a password. They asked a computer to read something for them, and the thing it read gave it new orders.<sup>[3]</sup></p>
+<p>If that sounds like a problem for someone else, consider where these assistants are headed. Two months after the Brave experiment, OpenAI released its own web browser with an “agent mode” that opens tabs and clicks on your behalf.<sup>[13]</sup> Google has said the same abilities are coming to Chrome, the browser most people already use, and demonstrated one filling an Instacart cart from a grocery list in an email.<sup>[14]</sup> Microsoft built the idea into Copilot for Word and Outlook.<sup>[4]</sup> And the audience is not small. By early 2026, about half of American adults said they used an AI chatbot, and roughly a quarter used one every day.<sup>[15]</sup></p>
+<p>So the question is no longer whether these assistants will be offered to you. It is whether you should say yes. I spent a semester reading what the people who build them have published about keeping them safe, and the honest answer is this. For some errands, yes, today. For the errands you most want help with, not yet, and the reason is a catch that the research describes clearly and the marketing does not.</p>
+
+<h2>The promise</h2>
+<p>For two years a chatbot was something you talked to. You typed a question, it typed an answer, and if the answer was useful you still had to go do the thing yourself.</p>
+<p>An AI agent is different. An agent is an assistant that can act. It can open web pages, read your inbox, fill out forms and press buttons, with the same logins you have. Ask it to find a dentist that takes your insurance and book the earliest slot, and it will browse, compare and click submit. Ask it to cancel the subscription you forgot about, and it will find the page you could never find. That is the pitch, and it is a good one. Most of what makes a computer tedious is the clicking, and here is a program offering to do the clicking.</p>
+<p>The first popular version appeared in 2023 under the name Auto-GPT, an open-source project that let anyone hook a chatbot up to a browser.<sup>[2]</sup> It was clumsy and it was a sensation. Within weeks it had also been hacked, and the way it was hacked is the catch.</p>
+
+<h2>The catch</h2>
+<p>In June 2023, a researcher named Lukas Euler built a web page and asked Auto-GPT to summarize it.<sup>[2]</sup> The page looked blank in places. The blank spots held text shrunk to zero size, invisible to a person and perfectly legible to a program. The hidden text told the assistant to run a command on the researcher’s computer. It did. Worse, when Auto-GPT paused to show the user what it was about to do, the hidden instructions had it print a fake, harmless-looking message so the user would approve.</p>
+<p>Two years later, in June 2025, a security firm called Aim Labs showed that Microsoft 365 Copilot could be made to leak a user’s private documents with a single crafted email the user never opened.<sup>[4]</sup> Microsoft rated the flaw critical and fixed it on its own servers.<sup>[5]</sup> Two months after that came Comet.</p>
+<p>Three products, three years, the same move. Put instructions where the assistant will read them, and the assistant treats them as yours. The technical name is indirect prompt injection. In plain words, it is a hidden note the assistant obeys.</p>
+</article>
 
 <figure class="wide">
   <svg viewBox="0 0 1040 400" role="img" aria-label="Four panels showing how a hidden note on a web page hijacks an AI assistant. You ask for a summary. The assistant opens the page. A hidden note on the page gives it new orders. The assistant obeys using your accounts.">
-    <defs>
-      <marker id="arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#9a9a9a"/></marker>
-    </defs>
+    <defs><marker id="arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#9a9a9a"/></marker></defs>
     <rect width="1040" height="400" fill="#f7f7f5"/>
     <text x="24" y="40" font-family="Helvetica Neue,Arial,sans-serif" font-size="13" letter-spacing="2" fill="#5a5a5a">HOW A HIDDEN NOTE HIJACKS AN ASSISTANT</text>
-    <!-- panel 1 -->
     <g transform="translate(24,70)">
       <rect width="220" height="290" rx="6" fill="#ffffff" stroke="#e2e2e2"/>
       <text x="16" y="34" font-family="Helvetica Neue,Arial,sans-serif" font-size="12" letter-spacing="2" fill="#2a78d6" font-weight="700">1 · YOU ASK</text>
@@ -82,7 +98,6 @@
       <text x="16" y="194" font-family="Georgia,serif" font-size="15" fill="#333">You did nothing wrong.</text>
     </g>
     <path d="M250,215 L282,215" stroke="#9a9a9a" stroke-width="2" marker-end="url(#arr)"/>
-    <!-- panel 2 -->
     <g transform="translate(290,70)">
       <rect width="220" height="290" rx="6" fill="#ffffff" stroke="#e2e2e2"/>
       <text x="16" y="34" font-family="Helvetica Neue,Arial,sans-serif" font-size="12" letter-spacing="2" fill="#2a78d6" font-weight="700">2 · IT OPENS THE PAGE</text>
@@ -98,7 +113,6 @@
       <text x="16" y="264" font-family="Georgia,serif" font-size="15" fill="#333">word, including the hidden ones.</text>
     </g>
     <path d="M516,215 L548,215" stroke="#9a9a9a" stroke-width="2" marker-end="url(#arr)"/>
-    <!-- panel 3 -->
     <g transform="translate(556,70)">
       <rect width="220" height="290" rx="6" fill="#ffffff" stroke="#e2e2e2"/>
       <text x="16" y="34" font-family="Helvetica Neue,Arial,sans-serif" font-size="12" letter-spacing="2" fill="#eb6834" font-weight="700">3 · THE NOTE SAYS</text>
@@ -111,7 +125,6 @@
       <text x="16" y="244" font-family="Georgia,serif" font-size="15" fill="#333">from you.</text>
     </g>
     <path d="M782,215 L814,215" stroke="#9a9a9a" stroke-width="2" marker-end="url(#arr)"/>
-    <!-- panel 4 -->
     <g transform="translate(822,70)">
       <rect width="194" height="290" rx="6" fill="#121212"/>
       <text x="16" y="34" font-family="Helvetica Neue,Arial,sans-serif" font-size="12" letter-spacing="2" fill="#ffd3c2" font-weight="700">4 · IT OBEYS</text>
@@ -123,41 +136,25 @@
       <text x="16" y="238" font-family="Helvetica Neue,Arial,sans-serif" font-size="12" fill="#bdbdbd">“indirect prompt injection.”</text>
     </g>
   </svg>
-  <figcaption><b>How a hidden note hijacks an assistant.</b> The steps follow a 2025 demonstration against Perplexity’s Comet browser by security researchers at Brave. Graphic by the author, co-authored with Claude (Anthropic). Source: Chaikin and Sahib, Brave [3].</figcaption>
+  <figcaption><b>How a hidden note hijacks an assistant.</b> The steps follow the 2025 demonstration against Perplexity’s Comet browser by security researchers at Brave. Graphic by the author, co-authored with Claude (Anthropic). Source: Chaikin and Sahib, Brave [3].</figcaption>
 </figure>
 
 <article>
-<p class="dropcap">In August of last year, two security researchers at Brave, the company behind a privacy-focused web browser, ran a small experiment on a rival product. Perplexity’s Comet browser had just added an assistant that could read pages and take actions for you. They asked it to do something ordinary. Summarize a Reddit thread.</p>
-<p>Somewhere in that thread, the researchers had planted a comment with instructions the human eye would skip over. The assistant did not skip over them. It opened the user’s email, found a one-time login code, and posted it where an attacker could read it. The person who asked for the summary never clicked a bad link. They never typed a password. They asked a computer to read something for them, and the thing they asked it to read gave it new orders.<sup>[3]</sup></p>
-<p>That is the whole problem in one story. Companies are rushing to turn chatbots into assistants that act, and nobody has solved the fact that these assistants will take instructions from anyone whose words they happen to read. The fixes that exist all work the same way, by taking abilities away from the assistant and handing the chores back to you. And when you look for who is measuring that cost, you find almost no one.</p>
-
-<h2>A new kind of helper</h2>
-<p>For two years, a chatbot was something you talked to. You typed a question, it typed an answer. If the answer was wrong, you were still the one who had to act on it.</p>
-<p>An AI agent is different. An agent is an assistant that can do things. It can open web pages, read your inbox, fill out forms, and run small programs, all with the same logins you have. Ask it to find a dentist that takes your insurance and book the earliest slot, and it will browse, compare, and click submit. That is the pitch, and it is a good one. Most of what makes a computer tedious is the clicking, and here is a program offering to do the clicking.</p>
-<p>The first popular version appeared in 2023 under the name Auto-GPT, an open-source project that let anyone hook a chatbot up to a browser and a command line.<sup>[2]</sup> Today the same idea ships inside products from the biggest names in the industry. Microsoft built it into Copilot for its office software.<sup>[4]</sup> Perplexity built it into a browser.<sup>[3]</sup> The direction is clear. The assistant is moving from the chat window into everything else on your screen.</p>
-
-<h2>The oldest trick, in a new place</h2>
-<p>The attack that caught Comet is not new. It was found within weeks of Auto-GPT’s release.</p>
-<p>In June 2023, a researcher named Lukas Euler set up a web page and asked Auto-GPT to summarize it.<sup>[2]</sup> The page looked blank in places. Those blank spots held text sized to zero pixels, invisible to a person and perfectly legible to a program. The hidden text told the assistant to run a command on the researcher’s computer. It did. Worse, when Auto-GPT paused to show the user what it was about to do, the injected instructions had it print a fake, harmless-looking message so the user would approve. In the researcher’s test setup, the assistant then broke out of the protective container it was running in and reached the host machine.</p>
-<p>Two years later, in June 2025, a security firm called Aim Labs showed that Microsoft 365 Copilot could be made to leak a user’s private documents with a single crafted email, which the user never had to open.<sup>[4]</sup> Microsoft rated the flaw critical and patched it on its own servers before customers had to do anything.<sup>[5]</sup> Two months after that came Comet.</p>
-<p>Three products, three years, the same move. Put instructions where the assistant will read them, and the assistant treats them as yours.</p>
+<h2>Why it keeps happening</h2>
+<p>Every piece of software you have ever used draws a line between two kinds of text. There is the program, which the computer obeys, and there is the data, which the computer merely handles. Your email app runs its own code. It does not run your emails.</p>
+<p>A language model has no such line. It takes in one long stream of words, your request, the web page, the email, the search result, and treats all of it as material to act on. The researchers who first named this problem, a team led by Kai Greshake, put it plainly in 2023. These systems “blur the line between data and instructions.”<sup>[1]</sup> Two years later the National Institute of Standards and Technology, the federal agency that writes the rulebook on measurement, listed the same attack in its official catalog of threats to AI and gave the same reason.<sup>[6]</sup></p>
+<p>Think of a new employee who follows every sticky note on their desk, no matter who left it. You can train that employee to be suspicious. You can lock the office door. But you cannot make them stop reading. That is why this is not an ordinary bug. A bug gets fixed. This is a property of how the technology works, and every defense in the research accepts it and tries to limit the damage.</p>
 
 <blockquote class="pull">These systems “blur the line between data and instructions.”<cite>Greshake and colleagues, who named the attack in 2023 [1]</cite></blockquote>
 
-<h2>Why it keeps happening</h2>
-<p>Every piece of software you have ever used draws a line between two kinds of text. There is the code, which the computer obeys, and there is the data, which the computer merely handles. Your email program runs its own code. It does not run the emails.</p>
-<p>A language model has no such line. It takes in one long stream of words, your request, the web page, the email, the search result, and treats all of it as material to reason about and act on. The researchers who first named this problem, a team led by Kai Greshake, put it plainly in 2023. These systems “blur the line between data and instructions.”<sup>[1]</sup> Two years later the National Institute of Standards and Technology, the federal agency that writes the rulebook on measurement, listed the same attack in its official catalog of threats to AI and gave the same reason.<sup>[6]</sup></p>
-<p>Think of a new employee who follows every sticky note on their desk, no matter who left it. You can train that employee to be suspicious. You can lock the office door. But you cannot make them stop reading.</p>
-<p>That is what makes this different from an ordinary bug. A bug gets fixed. This is a property of how the technology works. Every defense in the research, and I read all the major ones for this story, accepts that the assistant will keep reading strangers’ instructions and tries to limit the damage when it obeys.</p>
-
-<h2>Every fix takes something away</h2>
-<p>The defenses sort into two families. One family tries to teach the model better manners, training it to rank your instructions above anything it reads on a page. OpenAI published this approach under the name “instruction hierarchy” and reported large gains with little loss of ability.<sup>[10]</sup> The other family does not trust the model at all. It builds walls around it. The assistant may only use tools it chose before reading anything. Or a second, dumber program tracks where every piece of information came from and refuses to let anything from a web page steer a decision.<sup>[8]</sup></p>
-<p>Both families work by subtraction. Here is what each one takes back from you, in plain terms.</p>
+<h2>The fixes make it less useful</h2>
+<p>Here is the catch, in one sentence. Every known way to make an assistant safer works by taking away some of what made it useful.</p>
+<p>The defenses sort into two families. One tries to teach the model better manners, training it to rank your instructions above anything it reads on a page.<sup>[10]</sup> The other does not trust the model at all and builds walls around it. The assistant may only use tools it chose before reading anything. Or a second program follows it around and refuses to let anything from a web page steer a decision.<sup>[8]</sup> In plain terms, here is what each one takes back from you.</p>
 
 <figure style="margin:0 0 32px;padding:0;max-width:none">
 <table>
 <tr><th style="width:24%">The fix</th><th style="width:38%">What it does, in plain words</th><th>What you give up</th></tr>
-<tr><td>Ask first</td><td>The assistant stops and asks you before anything that sends information out of your account.</td><td>Pop-ups. Many of them. The researchers who built the most careful version of this call the result “user fatigue,” and warn that people start clicking yes without reading.<sup>[8]</sup></td></tr>
+<tr><td>Ask first</td><td>The assistant stops and asks you before anything that sends information out of your account.</td><td>Pop-ups. Many of them. The researchers who built the most careful version call the result “user fatigue,” and warn that people start clicking yes without reading.<sup>[8]</sup></td></tr>
 <tr><td>Pick tools first</td><td>Before it reads a single page, the assistant decides which tools this job needs and loses access to the rest.</td><td>Flexibility. If the job turns out to need something else halfway through, the assistant cannot adapt. You start over.<sup>[7]</sup></td></tr>
 <tr><td>The chaperone</td><td>A second program follows the assistant and blocks any action that was influenced by something it read online.</td><td>About 7 tasks in every 100 that used to work now fail, in exchange for a guarantee the other fixes cannot offer.<sup>[8]</sup></td></tr>
 <tr><td>Better manners</td><td>The model is trained to ignore instructions that appear inside pages and emails.</td><td>Certainty. Training lowers the odds. A new phrasing of the attack can undo it, and the company’s own numbers are the only ones available.<sup>[10]</sup></td></tr>
@@ -165,30 +162,33 @@
 <figcaption><b>What each fix takes back from you.</b> Four published defenses, translated. Descriptions are the author’s. Sources: Debenedetti et al. [7] [8], Wallace et al. [10].</figcaption>
 </figure>
 
-<p>Notice the pattern. Every row ends with you doing something the assistant used to do. Clicking the pop-up. Restarting the task. Finishing the job by hand. The research describes each of these costs, when it describes them at all, as a drop in the assistant’s score on a test. It almost never describes them as your time.</p>
+<p>An independent test makes the trade visible. In 2024 a team at ETH Zurich built a test suite called AgentDojo, nearly a hundred realistic errands for an assistant and more than six hundred planted attacks, and ran the leading defenses through it on OpenAI’s GPT-4o model.<sup>[7]</sup> With no protection, 58 attacks in 100 succeeded. The strictest fix, picking tools first, cut that to 7, but it is the fix that cannot change its plan halfway through. The fix that kept the assistant most useful, repeating your instructions after every page it reads, still let 28 in 100 through. Nothing tested was both as safe and as capable as the unprotected assistant.</p>
+
+<div class="stat">
+  <div><strong>58</strong><span>attacks in 100 succeed against an unprotected assistant in the independent test [7]</span></div>
+  <div><strong>7</strong><span>get through with the strictest fix, which also cannot adapt mid-task. You start over. [7]</span></div>
+  <div><strong>1 in 15</strong><span>sources reviewed for this article names the cost to the user at all, and only in passing [8]</span></div>
+</div>
+
+<p>Notice what that means for the errands you actually want done. The useful version of an assistant is the one that reads widely, adapts as it goes and acts without asking. That is also the version a stranger’s hidden note can steer. The safe version asks permission, sticks to a plan and refuses anything that smells of the open web. That version is a chatbot with extra steps. The research measures each fix by what the assistant can still do, tasks completed out of a hundred. It almost never measures the same loss as your time, and out of the fifteen sources behind this article, only one even names it.<sup>[8]</sup></p>
 
 <h2>The label and the lab</h2>
-<p>There is a second problem, and it is the one that should change how you read a product announcement.</p>
-<p>In 2024, researchers at Microsoft published a defense called spotlighting. The idea is to mark everything the assistant reads from the outside world so the model can tell it apart from your instructions, like printing a visitor’s badge on every page. In their own tests, the attack success rate fell from more than half to “below 2%.”<sup>[9]</sup></p>
-<p>Later that year, an independent team at ETH Zurich built a test suite called AgentDojo, nearly a hundred realistic tasks for an assistant and more than six hundred planted attacks, and ran the leading defenses through it.<sup>[7]</sup> The spotlighting idea, applied to OpenAI’s GPT-4o, let 42 attacks in 100 through.</p>
+<p>There is a second thing to know before you trust a product announcement.</p>
+<p>In 2024, researchers at Microsoft published a defense called spotlighting. The idea is to mark everything the assistant reads from the outside world so the model can tell it apart from your instructions, like printing a visitor’s badge on every page. In their own tests, the attack success rate fell from more than half to “below 2%.”<sup>[9]</sup> On the independent AgentDojo test, the same idea let 42 attacks in 100 through.<sup>[7]</sup></p>
 
 <figure style="margin:0 0 32px;padding:0;max-width:none">
   <svg viewBox="0 0 720 300" role="img" aria-label="Bar chart. Attacks that succeeded out of 100 on GPT-4o. With no protection, 58. Spotlighting as reported by its makers, below 2. Spotlighting on the independent AgentDojo test, 42.">
     <rect width="720" height="300" fill="#f7f7f5"/>
     <text x="24" y="34" font-family="Helvetica Neue,Arial,sans-serif" font-size="13" letter-spacing="2" fill="#5a5a5a">ATTACKS THAT SUCCEEDED, OUT OF 100</text>
-    <!-- axis -->
     <line x1="260" y1="60" x2="260" y2="250" stroke="#cfcfcf"/>
-    <!-- bars: scale 6.6px per unit, max 60 -> 396px -->
     <g font-family="Georgia,serif" font-size="16" fill="#121212">
       <text x="244" y="98" text-anchor="end">No protection</text>
       <rect x="262" y="80" width="383" height="28" fill="#9a9a9a"/>
       <text x="655" y="100" font-weight="700">58</text>
-
       <text x="244" y="154" text-anchor="end">Spotlighting,</text>
       <text x="244" y="174" text-anchor="end" font-size="13" fill="#5a5a5a">maker’s own test</text>
       <rect x="262" y="140" width="13" height="28" fill="#2a78d6"/>
       <text x="285" y="160" font-weight="700" fill="#2a78d6">below 2</text>
-
       <text x="244" y="214" text-anchor="end">Spotlighting,</text>
       <text x="244" y="234" text-anchor="end" font-size="13" fill="#5a5a5a">independent test</text>
       <rect x="262" y="200" width="277" height="28" fill="#eb6834"/>
@@ -199,33 +199,35 @@
   <figcaption><b>The label and the lab.</b> A defense’s own paper and an outside test can disagree by a wide margin. Chart by the author, co-authored with Claude (Anthropic). Sources: Hines et al. [9]; Debenedetti et al., AgentDojo, Table 5 [7].</figcaption>
 </figure>
 
-<p>Both numbers are honest. They measure different things, with different attacks, on different setups. But only one of them is the number you will see in a press release, and it is not the one from the outside lab. Anyone who has compared the calorie count on a menu with a nutrition label knows the feeling. When a company tells you its assistant is safe, the useful question is who checked.</p>
-<p>The independent test also makes the trade-off visible. On AgentDojo, the defense that blocked the most attacks on GPT-4o, picking tools first, let only 7 in 100 through. The defense that kept the assistant most useful, repeating your instructions after every page it reads, still let 28 in 100 through.<sup>[7]</sup> Nothing tested was both as safe and as capable as the unprotected assistant. There is no free fix. There is only a choice about who pays.</p>
+<p>Both numbers are honest. They measure different attacks on different setups. But only one of them is the number you will see in a press release, and it is not the one from the outside lab. Anyone who has compared the calorie count on a menu with a nutrition label knows the feeling. When a company tells you its assistant is safe, the useful question is who checked.</p>
 
-<div class="stat">
-  <div><strong>58</strong><span>attacks in 100 succeed against an unprotected assistant on GPT-4o, in the independent test [7]</span></div>
-  <div><strong>7</strong><span>get through with the strictest fix, which also means the assistant cannot change its plan mid-task [7]</span></div>
-  <div><strong>1</strong><span>research paper, out of twelve major sources reviewed, that names the cost to the user at all [8]</span></div>
-</div>
+<h2>So, are they useful?</h2>
+<p>Yes, for errands where nothing can be stolen. Not yet, for the errands that touch your accounts, unless you are willing to supervise, and supervision is the cost nobody puts in the ad.</p>
+<p>The line runs through what the assistant can reach. A security writer named Simon Willison calls it the lethal trifecta. Private data, content from strangers, and a way to send things out.<sup>[11]</sup> An assistant with all three can be robbed. An assistant with two of them cannot. Every one of the attacks above needed all three. Comet could read your email, read a Reddit page, and post. Copilot could read your documents, read an email, and send.</p>
+<p>That gives you a rule you can actually use, and it sorts the errands into three piles.</p>
 
-<h2>The cost no one counts</h2>
-<p>I came to this subject as a graduate student in software engineering who wants to build these assistants, and I spent a semester reading what the people who make them have written about keeping them safe. What struck me was not any single finding. It was the unit of measurement.</p>
-<p>Every paper measures a defense the same way, by what the assistant can still do. Tasks completed, out of a hundred. That is a reasonable number for an engineer. It is the wrong number for you. The assistant losing seven tasks in a hundred means seven times you will do the job yourself, and the paper never says which seven, or how long they take, or whether you will know in advance. In the whole body of research, one paper comes close to naming this, with the phrase “user fatigue,” and it does so in passing, on the way to a different point.<sup>[8]</sup></p>
-<p>So who pays for safety? Right now, you do, and nobody is sending you the bill. The company that chooses the defense knows what it took away. You will find out one pop-up and one stalled task at a time.</p>
+<figure style="margin:0 0 32px;padding:0;max-width:none">
+<table class="verdict">
+<tr><th style="width:18%">Verdict</th><th style="width:42%">The errand</th><th>Why</th></tr>
+<tr><td class="go">Let it</td><td>Summarize an article. Compare prices across stores. Research a trip. Draft the email you will send yourself.</td><td>It reads strangers’ pages but holds none of your accounts. A hidden note has nothing to steal.</td></tr>
+<tr><td class="wait">Watch it</td><td>Book the appointment. Fill out the form. Reorder from a site you are logged into.</td><td>Now it holds your accounts. Turn on “ask before acting,” read each pop-up, and accept that you are the safety feature.</td></tr>
+<tr><td class="no">Not yet</td><td>Triage your inbox and reply for you. Shop the open web with your card saved. Anything that reads your messages and browses in the same session.</td><td>All three keys at once. The only fixes strong enough to protect this today also stop it from doing the job.</td></tr>
+</table>
+<figcaption><b>Three piles of errands.</b> A decision guide drawn from the lethal trifecta rule and the independent benchmark results. Author’s framing. Sources: Willison [11]; Debenedetti et al. [7] [8].</figcaption>
+</figure>
 
-<h2>What you can do</h2>
-<p>None of this means you should refuse the help. It means you should accept it with your eyes open. Four things follow from the research.</p>
+<h2>How to decide</h2>
 <ol class="tips">
-  <li><b>Do not give one assistant all three keys.</b> The security writer Simon Willison calls them the lethal trifecta. Private data, content from strangers, and a way to send things out.<sup>[11]</sup> An assistant with all three can be robbed. Let it read your email, or browse the open web, but think hard before you let it do both in the same session.</li>
-  <li><b>Turn on “ask before acting,” and treat the pop-ups as the price.</b> If a product offers a setting that pauses before sending or deleting anything, use it. The pop-ups are the cost of the fix, made visible. The day you start clicking yes without reading is the day the fix stops working.</li>
-  <li><b>When a company says its assistant is safe, ask who tested it.</b> A number from the maker’s own lab is a label. A number from an outside test is a lab result. They are not the same, and the gap can be forty points.<sup>[7] [9]</sup></li>
-  <li><b>Watch for what it quietly stops doing.</b> The clearest sign that a product has added a safety fix is a task it used to finish and now hands back to you. That is the cost, arriving. It is worth paying. It is also worth noticing.</li>
+  <li><b>Count the keys before you hand them over.</b> Your private data, strangers’ content, a way out. Let the assistant have two. Never all three in one session.<sup>[11]</sup></li>
+  <li><b>Treat the pop-ups as the price, not a nuisance.</b> If a product pauses before sending or buying, that pause is the safety feature. The day you click yes without reading is the day it stops working.<sup>[8]</sup></li>
+  <li><b>When a company says it is safe, ask who tested it.</b> A number from the maker’s own lab is a label. A number from an outside test is a lab result. The gap can be forty points.<sup>[7] [9]</sup></li>
+  <li><b>Notice what it quietly stops doing.</b> A task it used to finish and now hands back to you is a safety fix arriving. It is worth paying for. It is also worth knowing you paid.</li>
 </ol>
-<p>The assistant in that Brave experiment did exactly what it was built to do. It read the page it was given and acted on what it found. The hard part was never teaching a computer to follow instructions. The hard part is deciding whose instructions count, and being honest about what we lose each time we narrow the answer.</p>
+<p>The assistant in the Brave experiment did exactly what it was built to do. It read what it was given and acted on what it found. The hard part was never teaching a computer to follow instructions. The hard part is deciding whose instructions count, and being honest that every answer so far has cost the user something. Until that changes, the useful assistant and the safe assistant are two different products, and only one of them is in the ad.</p>
 </article>
 
 <section class="refs">
-  <p class="note">This article is a translation of the author’s literature review for CMPE 294 at San José State University, written for readers who use AI assistants and do not work in software. Every number comes from the cited source. Claude (Anthropic) assisted with finding sources and co-authored the two graphics. The earlier, engineer-facing version of this translation is <a href="cheatsheet.html">still available</a>.</p>
+  <p class="note">This article is a translation of the author’s literature review for CMPE 294 at San José State University, written for readers who are being offered AI assistants and want to know whether to say yes. Every number comes from the cited source. Claude (Anthropic) assisted with finding sources and co-authored the two graphics. An earlier, engineer-facing version is <a href="cheatsheet.html">still available</a>.</p>
   <h3>Sources</h3>
   <ol>
     <li>K. Greshake, S. Abdelnabi, S. Mishra, C. Endres, T. Holz, and M. Fritz, “Not what you’ve signed up for: Compromising real-world LLM-integrated applications with indirect prompt injection,” in Proc. 16th ACM Workshop on Artificial Intelligence and Security (AISec ’23), Nov. 2023, pp. 79 to 90, doi 10.1145/3605764.3623985.</li>
@@ -240,6 +242,9 @@
     <li>E. Wallace, K. Xiao, R. Leike, L. Weng, J. Heidecke, and A. Beutel, “The instruction hierarchy: Training LLMs to prioritize privileged instructions,” arXiv preprint 2404.13208, Apr. 2024.</li>
     <li>S. Willison, “The lethal trifecta for AI agents: Private data, untrusted content, and external communication,” Jun. 16, 2025. <a href="https://simonwillison.net/2025/Jun/16/the-lethal-trifecta/">simonwillison.net</a></li>
     <li>L. Beurer-Kellner et al., “Design patterns for securing LLM agents against prompt injections,” arXiv preprint 2506.08837, Jun. 2025.</li>
+    <li>OpenAI, “Introducing ChatGPT Atlas,” Oct. 21, 2025. <a href="https://openai.com/index/introducing-chatgpt-atlas/">openai.com/index/introducing-chatgpt-atlas</a></li>
+    <li>A. Li, “Gemini in Chrome rolling out to all US desktop users, agentic browsing coming,” 9to5Google, Sep. 18, 2025. <a href="https://9to5google.com/2025/09/18/gemini-in-chrome/">9to5google.com</a></li>
+    <li>Pew Research Center, “Americans and AI 2026: Chatbots, smart devices and views on impact,” Jun. 17, 2026. <a href="https://www.pewresearch.org/wp-content/uploads/sites/20/2026/06/PI_2026.06.17_Americans-and-AI_REPORT.pdf">pewresearch.org</a></li>
   </ol>
   <h3>Images</h3>
   <p>“How a hidden note hijacks an assistant” and “The label and the lab” are original graphics by Bhagyesh Rathi, co-authored with Claude (Anthropic), 2026, drawn from sources [3], [7] and [9]. No stock or third-party images are used.</p>
