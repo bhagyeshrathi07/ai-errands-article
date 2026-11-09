@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Can You Trust What the AI in Your Inbox Tells You?</title>
-<meta name="description" content="Gmail now writes an AI summary at the top of your emails for billions of people. Scammers have found a way to make that summary lie. The research on fixing it has a catch.">
+<meta name="description" content="Gmail now writes an AI summary at the top of your emails for billions of people. Scammers have found a way to make that summary lie. Here is how the trick works, and a simple rule for when to trust it.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;1,500&family=Source+Serif+4:ital,wght@0,400;0,600;1,400&display=swap">
 <style>
@@ -62,7 +62,7 @@
 <header class="hed">
   <p class="kicker">Scams in the Age of AI</p>
   <h1>Can You Trust What the AI in Your Inbox Tells You?</h1>
-  <p class="dek">Gmail now writes a short AI summary at the top of your emails for billions of people. Scammers have found a way to make that summary lie. The research on fixing it has a catch, and the catch is you.</p>
+  <p class="dek">Gmail now writes a short AI summary at the top of your emails for billions of people. Scammers have found a way to make that summary lie. Here is how the trick works, and a simple rule for when to trust it.</p>
   <div class="byline"><span>By <b>Bhagyesh Rathi</b></span><span>San José State University</span><span>9 min read</span></div>
 </header>
 
@@ -74,7 +74,7 @@
 <h2>This is already in your inbox</h2>
 <p>You do not have to buy anything or sign up for anything for this to apply to you. Gmail has more than three billion accounts, and in June 2026 Google began showing its AI summaries on free accounts around the world, not just paid ones.<sup>[12]</sup> Microsoft has built its assistant, Copilot, into Outlook.<sup>[4]</sup> About half of American adults now use an AI chatbot, and a quarter use one every day.<sup>[16]</sup> The assistant that reads your mail is not a product you will be offered someday. For most people it arrived this year, switched on.</p>
 <p>And you were already worried. In a Pew Research Center survey of more than nine thousand adults, 73 percent said they had been hit by at least one online scam or attack, nearly two thirds said they get scam emails at least once a week, and 68 percent expected AI to make scams more common.<sup>[15]</sup> They were right, but not quite in the way they feared. The fear was fake voices and better-written phishing. The new way in is quieter. The scammer no longer has to fool you. They have to fool the assistant you trust to read for you.</p>
-<p>So the question I set out to answer is the one you probably already have. Can the AI that companies are putting between us and our mail be trusted, and if it has to be made safer, who pays for that? I spent a semester reading what the people who build these systems have published about it. The honest answer is yes, for the things it can only tell you, as long as you keep one habit. Not yet, for the things it is about to start doing for you, and the reason is a catch that the research describes clearly and the marketing does not.</p>
+<p>So the question I set out to answer is the one you probably already have. Can you trust the AI that reads your mail, and how would you know? I spent a semester reading what the people who build and test these systems have published. The honest answer is yes, for the things it can only tell you, as long as you keep one habit. Not yet, for the things it is about to start doing for you. The rest of this article explains why, and ends with a rule you can use.</p>
 
 <h2>Why the assistant falls for it</h2>
 <p>Every piece of software you have ever used draws a line between two kinds of text. There is the program, which the computer obeys, and there is the data, which the computer merely handles. Your email app runs its own code. It does not run your emails.</p>
@@ -144,37 +144,24 @@
 <p>Here is the good news about the Gmail trick. A summary can only tell you something. You still have to pick up the phone, and if you do not, nothing is lost. The assistant reads for you. It does not yet act for you.</p>
 <p>That is the part the companies want to change. In October 2025, OpenAI released its own web browser with a mode that opens tabs and clicks on your behalf.<sup>[13]</sup> Google has said the same abilities are coming to Chrome, the browser most people already use, and showed one filling a grocery cart from a list in an email.<sup>[14]</sup> Microsoft’s Copilot can already read your documents and send mail.<sup>[4]</sup> The pitch is a good one. Ask it to find a dentist that takes your insurance and book the earliest slot, and it will browse, compare and click submit. Most of what makes a computer tedious is the clicking, and here is a program offering to do the clicking.</p>
 <p>And when the assistant can act, the scammer no longer needs you to do anything at all. A month before the Gmail demonstration, a security firm called Aim Labs showed that Microsoft’s Copilot could be made to leak a person’s private documents with a single crafted email the person never opened.<sup>[4]</sup> Microsoft rated the flaw critical and fixed it on its own computers.<sup>[5]</sup> A month after the Gmail demonstration, researchers at Brave, a browser company, asked a rival browser’s assistant to summarize a Reddit thread. A comment hidden in the thread told it to open the user’s email, find a one-time login code and post it where the attacker could read it. It did. The user clicked nothing.<sup>[3]</sup></p>
-<p>The hidden note in Figueroa’s email asked the assistant to say something. The one in the Reddit thread asked it to do something, and it did that too. Same trick, three products, one summer. Which brings us to the research question, and the catch.</p>
+<p>The hidden note in Figueroa’s email asked the assistant to say something. The one in the Reddit thread asked it to do something, and it did that too. Same trick, three products, one summer. So the natural question is whether the companies have fixed it.</p>
 
 <blockquote class="pull">These systems “blur the line between data and instructions.”<cite>Greshake and colleagues, who first described the trick in 2023 [1]</cite></blockquote>
 
-<h2>The fixes make it less useful</h2>
-<p>Here is the catch, in one sentence. Every known way to make an assistant safer works by taking away some of what made it useful.</p>
-<p>The defenses sort into two families. One tries to teach the model better manners, training it to rank your instructions above anything it reads in an email or on a page.<sup>[10]</sup> The other does not trust the model at all and builds walls around it. The assistant may only use tools it chose before reading anything. Or a second program follows it around and refuses to let anything it read steer a decision.<sup>[8]</sup> In plain terms, here is what each one takes back from you.</p>
-
-<figure style="margin:0 0 32px;padding:0;max-width:none">
-<table>
-<tr><th style="width:24%">The fix</th><th style="width:38%">What it does, in plain words</th><th>What you give up</th></tr>
-<tr><td>Ask first</td><td>The assistant stops and asks you before anything that sends information out of your account.</td><td>Pop-ups. Many of them. The researchers who built the most careful version call the result “user fatigue,” and warn that people start clicking yes without reading.<sup>[8]</sup></td></tr>
-<tr><td>Pick tools first</td><td>Before it reads a single email or page, the assistant decides which tools this job needs and loses access to the rest.</td><td>Flexibility. If the job turns out to need something else halfway through, the assistant cannot adapt. You start over.<sup>[7]</sup></td></tr>
-<tr><td>The chaperone</td><td>A second program follows the assistant and blocks any action that was influenced by something it read.</td><td>About 7 tasks in every 100 that used to work now fail, in exchange for a guarantee the other fixes cannot offer.<sup>[8]</sup></td></tr>
-<tr><td>Better manners</td><td>The model is trained to ignore instructions that appear inside emails and pages.</td><td>Certainty. Training lowers the odds. A new phrasing of the trick can undo it, and the company’s own numbers are the only ones available.<sup>[10]</sup></td></tr>
-</table>
-<figcaption><b>What each fix takes back from you.</b> Four published defenses, translated. Descriptions are the author’s. Sources: Debenedetti et al. [7] [8], Wallace et al. [10].</figcaption>
-</figure>
-
-<p>An independent test makes the trade visible. In 2024 a university team in Switzerland built nearly a hundred realistic errands for an assistant, planted more than six hundred hidden notes in them, and ran the leading fixes through the course on one of OpenAI’s main models.<sup>[7]</sup> With no protection, 58 attacks in 100 succeeded. The strictest fix, picking tools first, cut that to 7, but it is the fix that cannot change its plan halfway through. The fix that kept the assistant most useful, repeating your instructions after everything it reads, still let 28 in 100 through. Nothing tested was both as safe and as capable as the unprotected assistant.</p>
+<h2>Do the protections work?</h2>
+<p>Partly. The companies have published real protections, and they help. One approach trains the model to ignore instructions that show up inside an email or a web page.<sup>[10]</sup> Another marks everything the assistant reads from the outside world so it can tell those words apart from yours.<sup>[9]</sup> A third does not trust the model at all and lets a second program block anything it was talked into.<sup>[8]</sup></p>
+<p>An independent test shows how far they go. In 2024 a university team in Switzerland built nearly a hundred realistic errands for an assistant, planted more than six hundred hidden notes in them, and ran the leading protections through the course on one of OpenAI’s main models.<sup>[7]</sup> With no protection, 58 attacks in 100 succeeded. The best protection tested cut that to 7. Most of the others still let 28 or more through. Not one stopped every note.</p>
 
 <div class="stat">
   <div><strong>58</strong><span>attacks in 100 succeed against an unprotected assistant in the independent test [7]</span></div>
-  <div><strong>7</strong><span>get through with the strictest fix, which also cannot adapt mid-task. You start over. [7]</span></div>
-  <div><strong>1 in 16</strong><span>sources reviewed for this article names the cost to the user at all, and only in passing [8]</span></div>
+  <div><strong>7</strong><span>still get through with the best protection tested [7]</span></div>
+  <div><strong>0</strong><span>protections tested stopped every hidden note [7]</span></div>
 </div>
 
-<p>Notice what that means for you. The useful version of an assistant is the one that reads everything, adapts as it goes and acts without asking. That is also the version a scammer’s hidden note can steer. The safe version asks permission, sticks to a plan and refuses anything that smells of a stranger. That version is a chatbot with extra steps. The research measures each fix by what the assistant can still do, tasks completed out of a hundred. It almost never measures the same loss as your time, and out of the sixteen sources behind this article, only one even names it.<sup>[8]</sup></p>
+<p>Seven in a hundred is a big improvement. It is also not a number you would accept from a lock on your front door. So the question for you is not whether the assistant is protected. It is what the assistant can reach if a note gets through, and whether a company’s safety claim is the number to believe.</p>
 
 <h2>The label and the lab</h2>
-<p>There is a second thing to know before you trust a company that says its assistant is protected.</p>
+<p>Here is the second thing to know before you trust a company that says its assistant is protected.</p>
 <p>In 2024, researchers at Microsoft published a fix. The idea is to mark everything the assistant reads from the outside world so it can tell those words apart from your instructions, like printing a visitor’s badge on every page. In Microsoft’s own tests, the share of attacks that worked fell from more than half to “below 2%.”<sup>[9]</sup> On the independent Swiss test, the same idea let 42 attacks in 100 through.<sup>[7]</sup></p>
 
 <figure style="margin:0 0 32px;padding:0;max-width:none">
@@ -203,7 +190,7 @@
 <p>Both numbers are honest. They measure different attacks on different setups. But only one of them is the number you will see in a press release, and it is not the one from the outside lab. Anyone who has compared the calorie count on a menu with the nutrition label on the box knows the feeling. When a company tells you its assistant is protected, the useful question is who checked.</p>
 
 <h2>So, can you trust it?</h2>
-<p>Trust it to read. Do not yet trust it to act, unless you are willing to supervise, and supervision is the cost nobody puts in the ad.</p>
+<p>Trust it to read. Do not yet trust it to act on its own.</p>
 <p>The line runs through what the assistant can reach. A security writer named Simon Willison boiled it down to three things an assistant must hold at once before it can rob you. Your private data, content from strangers, and a way to send things out.<sup>[11]</sup> An assistant with all three can be robbed. An assistant with two of them cannot. The Gmail summary held your mail and a stranger’s email, but it had no way to send anything out. All it could do was lie to you. The browser assistant could read your email, read a Reddit page, and post. Copilot could read your documents, read an email, and send. Those two were robbed.</p>
 <p>That gives you a rule you can actually use, and it sorts the things an assistant can do for you into three piles.</p>
 
@@ -212,7 +199,7 @@
 <tr><th style="width:18%">Verdict</th><th style="width:42%">What you let it do</th><th>Why</th></tr>
 <tr><td class="go">Let it read</td><td>Summarize your mail. Sort your inbox. Draft the reply you will send yourself. Compare prices or research a trip.</td><td>It holds your mail and strangers’ words but cannot send anything. The worst a hidden note can do is lie to you. Keep one habit. Anything urgent in a summary, open the real email.</td></tr>
 <tr><td class="wait">Watch it act</td><td>Book the appointment. Fill out the form. Reorder from a site you are logged into.</td><td>Now it holds your accounts. Turn on “ask before acting,” read each pop-up, and accept that you are the safety feature.</td></tr>
-<tr><td class="no">Not yet</td><td>Read your messages and reply for you. Shop the open web with your card saved. Anything that reads your mail and browses the web and sends things in the same session.</td><td>All three keys at once. The only fixes strong enough to protect this today also stop it from doing the job.</td></tr>
+<tr><td class="no">Not yet</td><td>Read your messages and reply for you. Shop the open web with your card saved. Anything that reads your mail and browses the web and sends things in the same session.</td><td>All three keys at once. No protection tested stops every hidden note, and this is where a note does real damage.</td></tr>
 </table>
 <figcaption><b>Three piles.</b> A decision guide drawn from Willison’s three-keys rule and the independent test results. Author’s framing. Sources: Willison [11]; Debenedetti et al. [7] [8].</figcaption>
 </figure>
@@ -224,11 +211,11 @@
   <li><b>Count the keys before you let it act.</b> Your private data, strangers’ content, a way to send things out. Let the assistant have two. Never all three in one session.<sup>[11]</sup></li>
   <li><b>When a company says it is protected, ask who tested it.</b> A number from the maker’s own lab is a label. A number from an outside test is a lab result. The gap can be forty points.<sup>[7] [9]</sup></li>
 </ol>
-<p>The assistant in Figueroa’s inbox did exactly what it was built to do. It read what it was given and repeated what it found. The hard part was never teaching a computer to follow instructions. The hard part is deciding whose instructions count, and being honest that every answer so far has cost the user something. Until that changes, the assistant you can trust and the assistant that does everything are two different products, and only one of them is in the ad.</p>
+<p>The assistant in Figueroa’s inbox did exactly what it was built to do. It read what it was given and repeated what it found. The hard part was never teaching a computer to follow instructions. The hard part is teaching it whose instructions count, and nobody has finished that job. Until they do, the rule is short. Let it read. Do not let it act alone.</p>
 </article>
 
 <section class="refs">
-  <p class="note">This article is a translation of the author’s literature review for CMPE 294 at San José State University, written for people who now have an AI reading their email and want to know whether to trust it. Every number comes from the cited source. Claude (Anthropic) assisted with finding sources and co-authored the two graphics. An earlier, engineer-facing version is <a href="engineer-version.html">still available</a>.</p>
+  <p class="note">This article is a translation of the author’s literature review for CMPE 294 at San José State University, written for people who now have an AI reading their email and want to know whether to trust it. The research is written for the engineers who build these systems. This article turns it into a rule for the person whose inbox it is. Every number comes from the cited source. Claude (Anthropic) assisted with finding sources and co-authored the two graphics. An earlier, engineer-facing version is <a href="engineer-version.html">still available</a>.</p>
   <h3>Sources</h3>
   <ol>
     <li>K. Greshake, S. Abdelnabi, S. Mishra, C. Endres, T. Holz, and M. Fritz, “Not what you’ve signed up for: Compromising real-world LLM-integrated applications with indirect prompt injection,” in Proc. 16th ACM Workshop on Artificial Intelligence and Security (AISec ’23), Nov. 2023, pp. 79 to 90, doi 10.1145/3605764.3623985.</li>
